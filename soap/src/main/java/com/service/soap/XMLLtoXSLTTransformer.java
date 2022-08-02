@@ -5,7 +5,6 @@ import org.springframework.util.ResourceUtils;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.StringReader;
 import java.io.StringWriter;

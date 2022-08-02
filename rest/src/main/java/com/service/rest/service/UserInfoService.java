@@ -34,6 +34,7 @@ public class UserInfoService {
         this.userInfoRepositoty = userInfoRepositoty;
     }
 
+    // Создание объекта UserInfo из JSON
     public UserInfo getUserInfoFromJson(String string) throws JSONException {
         UserInfo userInfo = new UserInfo();
         JSONObject json = new JSONObject(string);
@@ -63,11 +64,7 @@ public class UserInfoService {
         userInfoRepositoty.saveUserInfo(userInfo);
     }
 
-    public String convertUserInfoToXML(UserInfo userInfo) {
-        JSONObject json = new JSONObject(userInfo);
-        return XML.toString(userInfo);
-    }
-
+    // Возвращает w3c Node из XML
     public Node getPersonNodeFromXSLT(String xsltString) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -76,6 +73,7 @@ public class UserInfoService {
         return doc.getElementsByTagName("person").item(0);
     }
 
+    // Создание объекта UserInfo из w3c Node
     public UserInfo getUserInfoFromNode(Node node) {
         UserInfo userInfo = new UserInfo();
         NamedNodeMap personAttributes = node.getAttributes();
@@ -100,6 +98,7 @@ public class UserInfoService {
         return userInfo;
     }
 
+    // Из w3c Node генерируется XML-строка
     public String nodeToString(Node node) throws TransformerException {
         StringWriter sw = new StringWriter();
         Transformer t = TransformerFactory.newInstance().newTransformer();

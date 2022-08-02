@@ -50,22 +50,22 @@ public class ApiController {
                 new HttpPost("http://localhost:8080/ws");
         httpPost.addHeader("content-type", "text/xml");
 
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"");
-        buffer.append(" xmlns:gs=\"https://github.com/jug2505/JsonToXML\">");
-        buffer.append("<soapenv:Header/>");
-        buffer.append("<soapenv:Body>");
-        buffer.append("<gs:getUserRequest>");
-        buffer.append("<gs:data>");
-        buffer.append("<![CDATA[<person>").append(xml).append("</person>]]>");
-        buffer.append("</gs:data>");
-        buffer.append("</gs:getUserRequest>");
-        buffer.append("</soapenv:Body>");
-        buffer.append("</soapenv:Envelope>");
+        String envelope = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"" +
+                " xmlns:gs=\"https://github.com/jug2505/JsonToXML\">" +
+                "<soapenv:Header/>" +
+                "<soapenv:Body>" +
+                "<gs:getUserRequest>" +
+                "<gs:data>" +
+                "<![CDATA[<person>" + xml + "</person>]]>" +
+                "</gs:data>" +
+                "</gs:getUserRequest>" +
+                "</soapenv:Body>" +
+                "</soapenv:Envelope>";
 
-        StringEntity entity = new StringEntity(buffer.toString(), "UTF-8");
+        StringEntity entity = new StringEntity(envelope, "UTF-8");
         httpPost.setEntity(entity);
 
+        // Запрос к SOAP сервису, получение XML
         String result;
         try(CloseableHttpClient httpClient = HttpClients.createDefault()){
             HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -80,6 +80,7 @@ public class ApiController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+        // Получение UserInfo из XML, сохранение в БД и создание xml из Node
         String resultXSLT = "";
         try{
             Node personNode = userInfoService.getPersonNodeFromXSLT(result);
