@@ -17,26 +17,18 @@ public class UserInfoRepositoty {
     }
 
     public void saveUserInfo(UserInfo userInfo) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
+
 
         session.save(userInfo.getDocument());
         session.save(userInfo);
-
-        session.close();
-        session.getTransaction().commit();
     }
 
     // Возвращает всех пользователей
+
     public List<UserInfo> getAll() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        List<UserInfo> result = session.createQuery("from UserInfo", UserInfo.class).getResultList();
-
-        session.close();
-        session.getTransaction().commit();
-        return result;
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from UserInfo", UserInfo.class).getResultList();
     }
 
 
