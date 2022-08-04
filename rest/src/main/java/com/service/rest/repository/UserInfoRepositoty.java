@@ -18,8 +18,6 @@ public class UserInfoRepositoty {
 
     public void saveUserInfo(UserInfo userInfo) {
         Session session = sessionFactory.getCurrentSession();
-
-
         session.save(userInfo.getDocument());
         session.save(userInfo);
     }
