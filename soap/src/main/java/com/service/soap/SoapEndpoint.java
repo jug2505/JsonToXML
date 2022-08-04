@@ -1,7 +1,5 @@
 package com.service.soap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
@@ -15,7 +13,6 @@ import java.io.FileNotFoundException;
 
 @Endpoint
 public class SoapEndpoint {
-    Logger logger = LoggerFactory.getLogger(SoapEndpoint.class);
     private static final String NAMESPACE_URI = "https://github.com/jug2505/JsonToXML";
 
     // SOAP метод принимающий данные в CDATA
@@ -26,15 +23,12 @@ public class SoapEndpoint {
     public GetUserResponse getUserXML(@RequestPayload GetUserRequest request) {
         String resultXSLT = "";
         try {
-            logger.info("Data received: " + request.getData());
+            System.out.println(request.getData());
             resultXSLT = XMLLtoXSLTTransformer.transform(request.getData());
-        } catch (TransformerException | FileNotFoundException ex) {
-            logger.error("Error while transforming xml with xslt");
-        }
+        } catch (TransformerException | FileNotFoundException ignored) {}
 
         GetUserResponse response = new GetUserResponse();
         response.setData(resultXSLT);
-        logger.info("XML send: " + resultXSLT);
         return response;
     }
 }

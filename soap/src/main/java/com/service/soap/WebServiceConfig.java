@@ -15,7 +15,6 @@ import org.springframework.xml.xsd.XsdSchema;
 @EnableWs
 @Configuration
 public class WebServiceConfig extends WsConfigurerAdapter {
-    private static final String NAMESPACE_URI = "https://github.com/jug2505/JsonToXML";
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(ApplicationContext applicationContext) {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
@@ -29,7 +28,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("SoapPort");
         wsdl11Definition.setLocationUri("/ws");
-        wsdl11Definition.setTargetNamespace(NAMESPACE_URI);
+        wsdl11Definition.setTargetNamespace("https://github.com/jug2505/JsonToXML");
         wsdl11Definition.setSchema(userSchema);
         return wsdl11Definition;
     }

@@ -1,26 +1,19 @@
 package com.service.rest.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
 public class UserInfo {
-    @Id @GeneratedValue
-    private  Long id;
-    @Column(length = 32)
-    private String name;
-    @Column(length = 32)
-    private String surname;
-    @Column(length = 32)
-    private String patronymic;
-    private Date birthDate;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "document_id")
-    private Document document;
+private @Id @GeneratedValue Long id;
+private @Column(length = 32) String name;
+private @Column(length = 32) String surname;
+private @Column(length = 32) String patronymic;
+private Date birthDate;
+private @Enumerated(EnumType.STRING) Gender gender;
+@OneToOne(fetch = FetchType.EAGER)
+@JoinColumn(name = "document_id")
+private Document document;
 
     public UserInfo() {
     }
@@ -32,11 +25,6 @@ public class UserInfo {
         this.birthDate = birthDate;
         this.gender = gender;
         this.document = document;
-    }
-
-    @JsonIgnore
-    public boolean isFieldsNull() {
-        return name == null || surname == null || patronymic == null || birthDate == null || gender == null || document.isFieldsNull();
     }
 
     public Long getId() {
