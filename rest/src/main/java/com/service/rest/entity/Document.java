@@ -1,14 +1,20 @@
 package com.service.rest.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Document {
-    private @Id @GeneratedValue Long id;
-    private @Column(length = 4) String series;
-    private @Column(length = 6) String number;
-    private @Enumerated(EnumType.STRING) DocumentType type;
+    @Id @GeneratedValue
+    private Long id;
+    @Column(length = 4)
+    private String series;
+    @Column(length = 6)
+    private String number;
+    @Enumerated(EnumType.STRING)
+    private DocumentType type;
     private Date issueDate;
 
     public Document() {
@@ -22,11 +28,17 @@ public class Document {
         this.issueDate = issueDate;
     }
 
+
     public Document(String series, String number, DocumentType type, Date issueDate) {
         this.series = series;
         this.number = number;
         this.type = type;
         this.issueDate = issueDate;
+    }
+
+    @JsonIgnore
+    public boolean isFieldsNull() {
+        return series == null || number == null || type == null || issueDate == null;
     }
 
     public Long getId() {
